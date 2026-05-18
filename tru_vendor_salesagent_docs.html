@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>TruAbutment Sales Agent — Vendor Documentation</title>
+<style>
+  :root {
+    /* Background layers — subtly warm, off-white */
+    --bg:        #fbfaf7;       /* main canvas — barely warm */
+    --bg-sidebar:#f3f1ec;       /* sidebar — distinct, warm gray */
+    --bg-alt:    #f6f4ef;       /* card alt / table head */
+    --bg-soft:   #ece9e2;       /* inline code / chips */
+    --bg-card:   #ffffff;       /* cards stay clean white for contrast */
+
+    /* Ink */
+    --ink:       #1a1814;       /* warm near-black */
+    --ink-2:     #44413a;
+    --ink-3:     #7a766b;
+    --ink-4:     #aaa69a;
+
+    /* Borders */
+    --border:    #e4e0d6;
+    --border-2:  #d4cfc2;
+
+    /* Accent — desaturated forest green, professional and warm */
+    --accent:    #2f6b58;
+    --accent-soft: #e8f0ec;
+    --accent-2:  #1f4d3f;
+
+    /* Phase colors — muted, harmonized */
+    --phase-gray:  #7a766b;
+    --phase-green: #2f6b58;
+    --phase-amber: #b8762b;
+    --phase-red:   #b54730;
+
+    /* Highlight (open questions) */
+    --highlight: #fbf1d4;
+    --highlight-border: #d4a839;
+
+    /* Shadow */
+    --shadow-sm: 0 1px 2px rgba(26, 24, 20, 0.04);
+    --shadow:    0 1px 3px rgba(26, 24, 20, 0.05), 0 1px 2px rgba(26, 24, 20, 0.03);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code {
+    font-family: ui-monospace, "SF Mono", Monaco, Consolas, "Courier New", monospace;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.sidebar { position: static !important; height: auto !important; border-right: none !important; border-bottom: 1px solid var(--border); }
+  }
+
+  .topbar {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-brand {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .topbar-brand span { color: var(--accent); font-weight: 600; }
+  .topbar-divider { width: 1px; height: 20px; background: var(--border); }
+  .version-selector { display: flex; align-items: center; gap: 10px; }
+  .version-selector label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+  .version-selector select {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 5px 28px 5px 10px;
+    border: 1px solid var(--border-2);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    transition: border-color 0.15s;
+  }
+  .version-selector select:hover { border-color: var(--ink-3); }
+  .version-selector select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .version-badge {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .topbar-right .meta-item { display: flex; align-items: center; gap: 6px; }
+  .topbar-right .meta-label { color: var(--ink-4); }
+  .topbar-right .meta-value { color: var(--ink-2); font-weight: 500; }
+
+  nav.sidebar {
+    position: sticky;
+    top: 53px;
+    align-self: start;
+    height: calc(100vh - 53px);
+    overflow-y: auto;
+    padding: 28px 18px 28px 28px;
+    border-right: 1px solid var(--border);
+    background: var(--bg-sidebar);
+    font-size: 13px;
+  }
+  nav.sidebar .nav-group-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+  }
+  nav.sidebar ol {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    counter-reset: navnum;
+  }
+  nav.sidebar ol li { counter-increment: navnum; }
+  nav.sidebar ol li a {
+    color: var(--ink-2);
+    text-decoration: none;
+    display: block;
+    padding: 7px 10px 7px 34px;
+    border-radius: 6px;
+    position: relative;
+    font-size: 13px;
+    line-height: 1.4;
+    transition: background 0.15s, color 0.15s, transform 0.12s;
+    margin-bottom: 1px;
+  }
+  nav.sidebar ol li a::before {
+    content: counter(navnum, decimal-leading-zero);
+    position: absolute;
+    left: 8px;
+    top: 7px;
+    color: var(--ink-4);
+    font-size: 11px;
+    font-family: ui-monospace, "SF Mono", Monaco, Consolas, monospace;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  nav.sidebar ol li a:hover {
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink);
+  }
+  nav.sidebar ol li a:hover::before {
+    color: var(--accent);
+  }
+  nav.sidebar ol li a.active {
+    background: var(--bg-card);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+  }
+  nav.sidebar ol li a.active::before {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  nav.sidebar ol li a.active::after {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+  }
+  nav.sidebar .ext-link a {
+    color: var(--accent-2);
+    text-decoration: none;
+    display: block;
+    padding: 7px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    font-weight: 500;
+  }
+  nav.sidebar .ext-link a:hover { background: rgba(255, 255, 255, 0.7); }
+
+  main { padding: 36px 48px 80px; min-width: 0; }
+  @media (max-width: 900px) { main { padding: 24px 22px 40px; } }
+
+  header.masthead {
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .masthead .kicker {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .masthead h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .masthead h1 span { color: var(--accent); }
+  .masthead .subtitle { font-size: 14px; color: var(--ink-3); margin: 0; }
+
+  section.doc-section { margin-bottom: 64px; scroll-margin-top: 80px; }
+  section.doc-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    letter-spacing: -0.02em;
+  }
+  section.doc-section h2 .num {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    font-family: ui-monospace, "SF Mono", Monaco, Consolas, monospace;
+    letter-spacing: 0.06em;
+    background: var(--accent-soft);
+    padding: 4px 9px;
+    border-radius: 4px;
+    border: 1px solid rgba(47, 107, 88, 0.18);
+  }
+  section.doc-section .intent {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-bottom: 26px;
+    line-height: 1.65;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section h3 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 24px 0 12px;
+  }
+  section h3:first-of-type { margin-top: 4px; }
+
+  section p { margin: 0 0 12px; color: var(--ink-2); }
+  section p code, section li code, section td code, .card code {
+    font-size: 12px;
+    background: var(--bg-soft);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--ink);
+  }
+
+  section ul, section ol {
+    margin: 0 0 12px;
+    padding-left: 22px;
+    color: var(--ink-2);
+  }
+  section ul li, section ol li { padding: 3px 0; }
+  section strong { color: var(--ink); font-weight: 600; }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+  .card.accent-left { border-left: 3px solid var(--phase-green); }
+  .card.warn-left { border-left: 3px solid var(--phase-red); }
+  .card.gold-left { border-left: 3px solid var(--phase-amber); }
+  .card-head { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .card-sub { font-size: 12px; color: var(--ink-3); margin-bottom: 10px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 780px) { .two-col { grid-template-columns: 1fr; } }
+
+  .phase {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--phase-gray);
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
+  }
+  .phase.create { border-left-color: var(--phase-green); }
+  .phase.picker { border-left-color: var(--phase-amber); }
+  .phase.final  { border-left-color: var(--phase-red); }
+  .phase-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .phase-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .phase-name span { font-weight: 400; color: var(--ink-3); }
+  .phase-loc {
+    font-size: 11px;
+    color: var(--ink-3);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 2px 8px;
+    background: var(--bg-soft);
+    border-radius: 4px;
+  }
+  .phase-intent {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .phase-body { font-size: 13px; color: var(--ink-2); }
+  .phase-body code {
+    font-size: 12px;
+    background: var(--bg-soft);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .phase-note { margin-top: 4px; font-size: 12px; color: var(--ink-3); }
+  .transition {
+    padding: 6px 16px 6px 24px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .transition::before { content: "↓"; margin-right: 8px; color: var(--ink-4); }
+  .transition.signal { color: var(--accent); font-weight: 600; }
+  .transition.signal::before { color: var(--accent); }
+
+  .rules {
+    background: var(--ink);
+    color: #e4e4e7;
+    padding: 18px 22px;
+    margin-top: 20px;
+    border-radius: 8px;
+  }
+  .rules h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin: 0 0 12px;
+  }
+  .rules ol, .rules ul {
+    margin: 0;
+    padding-left: 22px;
+    font-size: 13px;
+    line-height: 1.75;
+    color: #e4e4e7;
+  }
+  .rules code {
+    font-size: 11.5px;
+    background: rgba(255,255,255,0.1);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: #fafafa;
+  }
+  .rules strong { color: #ffffff; }
+
+  table.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 10px 0 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  table.doc-table th {
+    text-align: left;
+    background: var(--bg-alt);
+    padding: 10px 12px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  table.doc-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-2);
+    vertical-align: top;
+  }
+  table.doc-table tr:last-child td { border-bottom: none; }
+  table.doc-table td.signal-name {
+    font-family: ui-monospace, "SF Mono", Monaco, Consolas, monospace;
+    font-size: 11.5px;
+    color: var(--accent);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  table.doc-table td.future { color: var(--ink-4); }
+  table.doc-table td.dimmed { color: var(--ink-4); }
+
+  .open-q-list {
+    background: var(--highlight);
+    border: 1px solid var(--highlight-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .open-q-list h3 {
+    color: var(--ink);
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .open-q-list ol { margin: 0; padding-left: 22px; font-size: 13px; }
+  .open-q-list ol li { padding: 4px 0; color: var(--ink); }
+  .open-q-list code { background: rgba(0,0,0,0.06); color: var(--ink); }
+
+  .convo {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    box-shadow: var(--shadow-sm);
+  }
+  .convo-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .convo .line { margin: 5px 0; line-height: 1.6; }
+  .convo .user { color: var(--ink); }
+  .convo .user::before {
+    content: "User";
+    display: inline-block;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .convo .bot { color: var(--ink-2); }
+  .convo .bot::before {
+    content: "Bot";
+    display: inline-block;
+    font-weight: 600;
+    color: var(--ink-3);
+    background: var(--bg-soft);
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .convo .note {
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    background: var(--bg-soft);
+    color: var(--ink-3);
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  .tag.future { background: #fef3c7; color: #92400e; }
+  .tag.draft { background: #fee2e2; color: #991b1b; }
+
+  .conventions {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin-top: 16px;
+  }
+  .conventions h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 10px;
+  }
+  .conventions ul { font-size: 12.5px; line-height: 1.7; margin: 0; padding-left: 20px; color: var(--ink-2); }
+  .conventions code { font-size: 11.5px; }
+
+  .code-block {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: ui-monospace, "SF Mono", Monaco, Consolas, monospace;
+    font-size: 12px;
+    white-space: pre;
+    overflow-x: auto;
+    color: var(--ink);
+    margin: 10px 0 14px;
+    line-height: 1.6;
+  }
+
+  footer.doc-footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--ink-3);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer.doc-footer code {
+    font-size: 11.5px;
+    background: var(--bg-soft);
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--ink-2);
+  }
+
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--ink-2);
+    border-radius: 0 8px 8px 0;
+  }
+  .callout strong { color: var(--ink); }
+
+  .version-content { display: none; }
+  .version-content.active { display: block; }
+
+  /* ============ PASSWORD GATE ============ */
+  body.locked { overflow: hidden; }
+  body.locked .topbar,
+  body.locked .layout { display: none !important; }
+
+  .gate-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  body.locked .gate-overlay { display: flex; }
+
+  .gate-card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 20px rgba(26, 24, 20, 0.06), 0 1px 3px rgba(26, 24, 20, 0.04);
+  }
+  .gate-brand {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .gate-brand span { color: var(--accent); }
+  .gate-sub {
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-bottom: 24px;
+  }
+  .gate-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .gate-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-2);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--ink);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .gate-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .gate-input.shake {
+    animation: shake 0.4s;
+    border-color: var(--phase-red);
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  .gate-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+  }
+  .gate-btn:hover { background: var(--accent-2); }
+  .gate-error {
+    font-size: 12px;
+    color: var(--phase-red);
+    margin-top: 10px;
+    min-height: 16px;
+  }
+  .gate-footer {
+    font-size: 11px;
+    color: var(--ink-4);
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+</style>
+</head>
+<body class="locked">
+
+<!-- ============ PASSWORD GATE ============ -->
+<div class="gate-overlay" id="gateOverlay">
+  <div class="gate-card">
+    <div class="gate-brand">TruAbutment <span>Sales Agent</span></div>
+    <div class="gate-sub">Vendor documentation — access required</div>
+
+    <div class="gate-label">Access password</div>
+    <input type="password" id="gateInput" class="gate-input" autocomplete="off" autofocus />
+    <button class="gate-btn" id="gateBtn">Enter</button>
+    <div class="gate-error" id="gateError"></div>
+
+    <div class="gate-footer">Contact Yechan for access if needed.</div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-brand">TruAbutment <span>Sales Agent</span></div>
+    <div class="topbar-divider"></div>
+    <div class="version-selector">
+      <label for="version">Version</label>
+      <select id="version" onchange="switchVersion(this.value)">
+        <option value="v1.0" selected>v1.0 — 2026-05-18</option>
+      </select>
+      <span class="version-badge">Latest</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="meta-item">
+      <span class="meta-label">Modified by</span>
+      <span class="meta-value">Yechan</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Updated</span>
+      <span class="meta-value">2026-05-14</span>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <nav class="sidebar">
+    <div class="nav-group-label">Sections</div>
+    <ol>
+      <li><a href="#sec-1">Project Summary</a></li>
+      <li><a href="#sec-2">Catalog Reality</a></li>
+      <li><a href="#sec-3">Order Flow Design</a></li>
+      <li><a href="#sec-4">API Integration Scope</a></li>
+      <li><a href="#sec-5">iOS Signal Contract</a></li>
+      <li><a href="#sec-6">Business Rules</a></li>
+      <li><a href="#sec-7">User Utterance Examples</a></li>
+      <li><a href="#sec-8">Priority for First Response</a></li>
+    </ol>
+
+    <div class="nav-group-label">Reference</div>
+    <div class="ext-link">
+      <a href="#sec-9">API Reference →</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="version-content active" data-version="v1.0">
+
+      <header class="masthead">
+        <div class="kicker">For BotPress Vendor Review</div>
+        <h1>TruAbutment <span>Sales Agent</span> — Production Build</h1>
+        <p class="subtitle">Foundation documentation for vendor architectural review and recommendation.</p>
+      </header>
+
+      <section class="doc-section" id="sec-1">
+        <h2><span class="num">01</span>Project Summary</h2>
+        <div class="intent">
+          Context for what we're building, who it's for, and the shape of the engagement.
+        </div>
+
+        <h3>What we're building</h3>
+        <p>
+          TruAbutment's AI Sales Agent is a conversational ordering and product
+          Q&amp;A assistant for dental professionals — dentists (clinicians) and
+          dental lab specialists. This engagement is the first proper production
+          build, moving on from an in-house prototype.
+        </p>
+
+        <h3>User types — both supported in this phase</h3>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head">Non-login user</div>
+            <p style="margin:0 0 8px 0; font-size:13px;">
+              Enters first name, phone number, email, and country at the start.
+              Can browse, ask product Q&amp;A, and receive pricing at
+              <strong>MSRP</strong>.
+            </p>
+            <p style="margin:0; font-size:13px;">
+              <strong>Cannot place orders</strong> and cannot access order history.
+              When a non-login user tries either, the bot guides them to log in,
+              and points to sign-up if they don't yet have an account.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-head">CP-account user (logged in)</div>
+            <p style="margin:0 0 8px 0; font-size:13px;">
+              Authenticated through the Customer Portal. Sees
+              <strong>account-specific pricing</strong> (per-customer tiers applied),
+              not MSRP.
+            </p>
+            <p style="margin:0; font-size:13px;">
+              <strong>Can place orders</strong> through the full order flow and access
+              order history.
+            </p>
+          </div>
+        </div>
+        <p style="margin-top:12px;">
+          Both user types are in scope for this phase. The split affects pricing,
+          ordering capability, and which signals fire — but the conversational
+          experience should feel consistent across both.
+        </p>
+
+        <h3>Channels &amp; Architecture</h3>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head">Primary — iOS app</div>
+            <p style="margin:0; font-size:13px;">
+              Custom Chat API client for dental professionals. Conversational
+              ordering and product Q&amp;A. A .NET Proxy on our side handles auth,
+              CP API bridging, signal routing, and TTS/STT integration; what reaches
+              BotPress is always text in / text out.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-head">Future — Custom Web</div>
+            <p style="margin:0; font-size:13px;">
+              Same bot, same backbone, custom web client (replacing the previous
+              embedded Webchat prototype, which is being deprecated). Single
+              BotPress bot serving multiple custom clients.
+            </p>
+          </div>
+        </div>
+
+        <h3>Voice Mode</h3>
+        <p>
+          Voice mode is not on by default. The user toggles it on via a button in
+          the iOS app, and can turn it off at any time. The system never re-enables
+          it automatically. Voice mode turns off automatically only at the address
+          picker step, since selection happens via native dropdowns.
+        </p>
+        <p>
+          <strong>Voice processing happens entirely on our side.</strong> STT (speech-to-text)
+          and TTS (text-to-speech) are handled by our chosen providers, integrated
+          through the .NET Proxy and the iOS app. BotPress only sees and produces
+          plain text — what the user said is transcribed before reaching the bot,
+          and what the bot responds with is sent through TTS on its way back to the
+          user.
+        </p>
+
+        <h3>Core Principles</h3>
+        <ul>
+          <li>
+            <strong>Naturally conversational tone — across voice and text.</strong>
+            Because the bot's response text is sent directly to TTS when voice is on,
+            and shown as a chat bubble when voice is off, the same response style
+            needs to work for both. We're aiming for a middle-ground tone that reads
+            naturally aloud without being terse, and reads naturally on screen without
+            being verbose. <em>Alternatively</em>, if BotPress can produce two response
+            tracks per turn (a voice-tuned variant and a chat-tuned variant) keyed off
+            voice state, that's also acceptable. We're open to suggestions here.
+          </li>
+          <li><strong>No hallucination.</strong> Only verified facts. No invented SKUs, prices, or compatibility claims.</li>
+          <li><strong>Honest redirect when uncertain.</strong> When the bot doesn't have what it needs, it says so and points to the right contact.</li>
+          <li><strong>No autonomous orders or medical decisions.</strong> The user always confirms; the bot never advises clinical choices.</li>
+        </ul>
+
+        <h3>What we want from this engagement</h3>
+        <ul>
+          <li><strong>System maintainable</strong> — production-grade, debuggable, modular.</li>
+          <li><strong>KB maintainable</strong> — content can be updated by us going forward, ideally through a tooling layer rather than the studio dashboard.</li>
+          <li><strong>Modular workflow architecture</strong> — clean boundaries between conversational core, order flow, and integrations.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="sec-2">
+        <h2><span class="num">02</span>Catalog Reality</h2>
+        <div class="intent">
+          The current state of our catalog — what's firm, what's still being organized,
+          and a structural quirk worth flagging.
+        </div>
+
+        <h3>Status</h3>
+        <p>
+          Catalog categorization is in progress on our side. For the initial launch,
+          what we have firm KB content on is <strong>six main Product Family Kits and their
+          internal stock components — approximately 150 items in total</strong>.
+        </p>
+        <p>
+          Within these 150 items, two levels exist: the <strong>kit itself</strong> (the
+          main, sellable product family unit) and the <strong>stock-level components</strong>
+          that make up that kit (also individually orderable). Both levels are within
+          the initial in-cart ordering scope.
+        </p>
+        <p>
+          Beyond the 150, there's a broader stock catalog of several thousand SKUs
+          across various item categories. These aren't covered by this initial scope —
+          they'll be addressed in a subsequent scoping phase. We'll go over the
+          structure together at that point, or share supporting materials on request.
+        </p>
+
+        <h3>Initial Product Family Kits</h3>
+        <div class="card">
+          <ul style="margin:0; padding-left: 20px; columns: 2; column-gap: 32px; color: var(--ink);">
+            <li>TruBolt Kit</li>
+            <li>ioConnect Kit</li>
+            <li>T-Marker Kit</li>
+            <li>Tru Reamer Kit</li>
+            <li>Tru Dual Align Scan Body Kit</li>
+            <li>ASC Pro Kit</li>
+          </ul>
+          <div class="card-sub" style="margin-top: 12px; margin-bottom: 0;">
+            Each kit has documented KB content and a set of internal stock components.
+            Kit and components together amount to roughly 150 SKUs.
+          </div>
+        </div>
+
+        <h3>Item Description Compounding</h3>
+        <p>
+          Item names embed multiple dimensions of information — product family,
+          implant brand, size, and length variant — in a single string. Examples
+          from the initial list:
+        </p>
+        <div class="card">
+          <div style="display:grid;grid-template-columns:140px 1fr;gap:6px 16px;font-size:12.5px;align-items:baseline;">
+            <code style="background:var(--bg-soft);padding:4px 8px;border-radius:4px;color:var(--ink);font-weight:600;">IO-ST46L</code>
+            <span style="color:var(--ink-2);">ioConnect compatible with Straumann 4.6 Long</span>
+
+            <code style="background:var(--bg-soft);padding:4px 8px;border-radius:4px;color:var(--ink);font-weight:600;">HSS-GD47</code>
+            <span style="color:var(--ink-2);">HS Cap Small compatible with Global D 4.7</span>
+
+            <code style="background:var(--bg-soft);padding:4px 8px;border-radius:4px;color:var(--ink);font-weight:600;">TRMK01-AU</code>
+            <span style="color:var(--ink-2);">Tru Reamer Kit compatible with AOT &amp; URIS</span>
+
+            <code style="background:var(--bg-soft);padding:4px 8px;border-radius:4px;color:var(--ink);font-weight:600;">ST46-DWFRM</code>
+            <span style="color:var(--ink-2);">Direct Screw Final Reamer compatible with Straumann 4.6</span>
+          </div>
+          <div style="font-size:12.5px;color:var(--ink-3);margin-top:14px;padding-top:10px;border-top:1px dashed var(--border);">
+            A single name typically packs: product family · component type · implant
+            brand · size · length variant. Users frequently search by one of these
+            embedded dimensions ("Straumann 4.6 compatible", "Long", "AOT reamer")
+            rather than by exact SKU.
+          </div>
+        </div>
+        <div class="callout">
+          We'd appreciate BotPress's input on <strong>rules or strategies</strong>
+          for parsing and searching across this kind of compound-description data —
+          what's worked in your other catalog-heavy bots.
+        </div>
+
+        <h3>KB Standardized Format</h3>
+        <p>
+          We've established a structural standard that all product KBs follow. The
+          essentials are below.
+        </p>
+
+        <div class="card">
+          <div class="card-head">9-file skeleton per product</div>
+          <div style="font-size:12.5px;color:var(--ink-2);margin-bottom:10px;">
+            Each product KB is built from this skeleton. Files are generated only when
+            content applies to that product.
+          </div>
+          <table class="doc-table" style="margin: 6px 0 0; box-shadow: none;">
+            <tr><td style="width: 220px;"><code style="font-size: 11.5px;">01_Overview</code></td><td>Identity, key features, kit lineup</td><td style="width: 130px; color: var(--accent); font-weight: 600;">Always</td></tr>
+            <tr><td><code style="font-size: 11.5px;">02_Compatibility</code></td><td>Implant system / platform matching</td><td style="color: var(--ink-3);">When applicable</td></tr>
+            <tr><td><code style="font-size: 11.5px;">03_Components_and_Specs</code></td><td>Kit contents, component tables, specs</td><td style="color: var(--accent); font-weight: 600;">Always</td></tr>
+            <tr><td><code style="font-size: 11.5px;">04_Workflow</code></td><td>Clinical procedure / usage workflow</td><td style="color: var(--ink-3);">When applicable</td></tr>
+            <tr><td><code style="font-size: 11.5px;">05_Best_Practices</code></td><td>Technique-sensitive guidance</td><td style="color: var(--ink-3);">When applicable</td></tr>
+            <tr><td><code style="font-size: 11.5px;">06_Troubleshooting</code></td><td>Known failure scenarios &amp; solutions</td><td style="color: var(--ink-3);">When applicable</td></tr>
+            <tr><td><code style="font-size: 11.5px;">07_Maintenance</code></td><td>Reuse, sterilization, storage</td><td style="color: var(--ink-3);">When applicable</td></tr>
+            <tr><td><code style="font-size: 11.5px;">08_Safety_and_Regulatory</code></td><td>Rx status, IFU references, warnings</td><td style="color: var(--accent); font-weight: 600;">Always</td></tr>
+            <tr><td><code style="font-size: 11.5px;">09_FAQ</code></td><td>User-facing Q/A pairs</td><td style="color: var(--accent); font-weight: 600;">Always</td></tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-head">Chunking rules (current working set)</div>
+          <p style="margin:0 0 8px 0;font-size:12.5px;color:var(--ink-2);">
+            Each <code>##</code> section follows four rules that have been giving us good
+            retrieval performance so far:
+          </p>
+          <ol style="margin:0;padding-left:22px;font-size:12.5px;color:var(--ink-2);line-height:1.7;">
+            <li><strong>Independent</strong> — no "as mentioned above" type references; each section reads standalone.</li>
+            <li><strong>Self-complete</strong> — retrieved in isolation, it answers its core question.</li>
+            <li><strong>Header contains searchable keywords</strong> — "ioConnect Scan Body — Sizes and Specifications", not just "Sizes".</li>
+            <li><strong>Keywords line at section end</strong> — canonical name, alternative form, itemNo, PDF description form, and likely user query phrasings.</li>
+          </ol>
+          <p style="margin:10px 0 0 0;font-size:12px;color:var(--ink-3);">
+            Target length: 100–400 words per section. We're open to suggestions on
+            how content structuring could be enhanced further.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">Cross-product references — hub-spoke</div>
+          <p style="margin:0;font-size:12.5px;color:var(--ink-2);">
+            Product KBs <strong>mention</strong> other products by name where relevant, but
+            detailed interactions (combined workflows, compatibility matrices, decision
+            criteria) live in a separate <strong>Product Relations</strong> document. The
+            intent is to keep individual product KBs focused, keep cross-product
+            information in one canonical place, and keep growth manageable as new
+            products are added.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">Source-of-truth hierarchy</div>
+          <p style="margin:0 0 8px 0;font-size:12.5px;color:var(--ink-2);">
+            When sources conflict, this order resolves it:
+          </p>
+          <ol style="margin:0;padding-left:22px;font-size:12.5px;color:var(--ink-2);line-height:1.7;">
+            <li>PRD Target Item List — itemNo, SKU identity, descriptions, kit membership</li>
+            <li>IFU documents — regulatory, safety, sterilization parameters</li>
+            <li>Latest official brochure / PDF — canonical product spec, kit composition</li>
+            <li>Customer policy (FAQ / support) — customer-facing policy and responses</li>
+            <li>Product data (marketing) — features, technical specs, positioning</li>
+            <li>Existing KB content — overwritten by any of the above when in conflict</li>
+          </ol>
+        </div>
+
+        <h3>KB Maintenance</h3>
+        <p>
+          Going forward, we want to be able to maintain KB content on our side without
+          editing the BotPress studio directly. A KB-update tool of some form is part
+          of the desired outcome of this engagement. We're open to BotPress's
+          recommendation on what shape that tool should take.
+        </p>
+
+        <div class="open-q-list">
+          <h3>Open questions for BotPress</h3>
+          <ol>
+            <li>Recommended data architecture for catalog at this scale — KB documents, function tools, hybrid?</li>
+            <li>Strategies for handling compound item descriptions where brand and compatibility are embedded in the name?</li>
+            <li>How would retrieval design need to evolve as we expand from the initial 150 toward the broader catalog later?</li>
+            <li>Shape of a KB-update tool that lets us maintain content without going into the studio?</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-3">
+        <h2><span class="num">03</span>Order Flow Design</h2>
+        <div class="intent">
+          Initial design direction for the order flow. Open to refinement based on
+          BotPress's experience with similar order bots.
+        </div>
+
+        <h3>Where the user commits</h3>
+        <p>
+          The order flow has several steps, but the overall arc is driven by
+          <strong>two big user inputs</strong>. The first is <strong>Proceed</strong> — the user
+          has built their cart in chat and is ready to lock in the items; this creates
+          the order in CP. The second is <strong>Submit</strong> — after reviewing shipping,
+          contact, and delivery details in a native picker, the user confirms the
+          order for final submission. Cart building happens in chat (natural
+          language); the picker happens in native UI; both are needed because each
+          part of the flow has different ergonomics.
+        </p>
+
+        <h3>Conversational quality during ordering</h3>
+        <p>
+          All cart building happens through natural language, so utterance intent
+          classification is central. While the user is in ordering mode, they may
+          stay on-task ("add two more", "actually make it Straumann instead") or
+          shift to adjacent questions ("what's the lead time?", "is this compatible
+          with X?"). When the question is off the ordering track, our intent is to
+          <strong>let the user know we're stepping out of ordering mode</strong>, route
+          back through the main orchestration node to the relevant expert workflow
+          for a proper answer, and then offer to return to ordering. Forcing every
+          adjacent question to be handled inside the order workflow would either
+          stretch its scope too far or risk shallow answers.
+        </p>
+        <p>
+          A note on cart state: before Step 2 (<code>create</code>), the cart lives
+          only in BotPress state. If the user exits ordering mode for an extended
+          troubleshooting or Q&amp;A detour, cart state may be lost depending on how
+          state preservation is handled. We'd value BotPress's view on the cleanest
+          pattern for preserving in-progress cart state across mode exits — or
+          whether prompting the user to commit (Proceed) before extended detours is
+          the more practical approach.
+        </p>
+
+        <h3>Cart visualization</h3>
+        <p>
+          As items are added or modified, we'd like the cart preview to show
+          <strong>item images alongside names and quantities</strong>, similar to a
+          standard e-commerce cart. The image data will be available on our side;
+          this is mainly a presentation note for how the cart preview signal renders
+          on the iOS client.
+        </p>
+
+        <h3>4-Step Cart Lifecycle</h3>
+
+        <div class="phase">
+          <div class="phase-head">
+            <div class="phase-name">Step 1 <span>· Cart</span></div>
+            <div class="phase-loc">BotPress chat (via API to CP)</div>
+          </div>
+          <div class="phase-intent">The user builds their cart through natural conversation. Nothing is saved to CP as an order yet.</div>
+          <div class="phase-body">
+            Natural-language add / modify / delete. Each cart change calls
+            <code>estimate</code> for live price &amp; stock validation.
+          </div>
+          <div class="phase-note">Example utterances: "Add one ioConnect Kit for AOT" · "Make it two" · "Drop the Reamer Kit" · "How much is it total?"</div>
+        </div>
+
+        <div class="transition">User signals intent to proceed</div>
+
+        <div class="card" style="margin: 4px 0 12px;">
+          <div class="card-head">Within Step 1 — Related Items Recommendation</div>
+          <p style="margin:0 0 8px 0;font-size:12.5px;color:var(--ink-2);">
+            Once the user signals they're ready to proceed (still within Step 1,
+            before <code>create</code> is called), the bot may surface related items
+            based on a <strong>static mapping table</strong>. What's already in the cart
+            determines which related items appear, with a brief justification per
+            suggestion.
+          </p>
+          <p style="margin:0;font-size:12.5px;color:var(--ink-2);">
+            The bot then asks something like: <em>"Want to add any of these, or keep
+            your current cart and proceed?"</em> The user can accept ("add the first
+            one, two of them"), reject, or specify; response parsing is AI-assisted
+            to handle the variety of natural phrasing.
+          </p>
+        </div>
+
+        <div class="transition">User: "Proceed" → Yes</div>
+
+        <div class="phase create">
+          <div class="phase-head">
+            <div class="phase-name">Step 2 <span>· Create</span></div>
+            <div class="phase-loc">BotPress → CP</div>
+          </div>
+          <div class="phase-intent">First commitment. The order is created in CP with OPEN status. Items can no longer be changed.</div>
+          <div class="phase-body">
+            <code>POST /orders/create</code> — generates an order with OPEN status.
+            <code>orderId</code> stored as <code>pendingOpenOrderNo</code>.
+          </div>
+          <div class="phase-note">Example utterances: "Yes, proceed" · "Looks good, let's go" · "Wait, can I change the quantity first?" (routes back to Step 1)</div>
+        </div>
+
+        <div class="transition">"Submit?" — chat prompt + button (both accepted)</div>
+        <div class="transition signal">Signal · ORDER_SUBMIT_GATE → iOS</div>
+
+        <div class="phase picker">
+          <div class="phase-head">
+            <div class="phase-name">Step 3 <span>· Picker</span></div>
+            <div class="phase-loc">iOS Native UI</div>
+          </div>
+          <div class="phase-intent">The user reviews and selects shipping/contact/delivery in a native picker, not in chat.</div>
+          <div class="phase-body">
+            Three dropdowns: <strong>shipTo</strong> · <strong>contactTo</strong> · <strong>deliveryMethod</strong>.
+            contactTo fills billTo internally. Voice mode auto-disables on entry.
+          </div>
+          <div class="phase-note">No chat utterances at this step — selection is via native UI only.</div>
+        </div>
+
+        <div class="transition">Confirm</div>
+
+        <div class="phase final">
+          <div class="phase-head">
+            <div class="phase-name">Step 4 <span>· Finalize</span></div>
+            <div class="phase-loc">iOS → CP</div>
+          </div>
+          <div class="phase-intent">Final commitment. The OPEN order transitions to CONFIRMED in CP.</div>
+          <div class="phase-body">
+            <code>POST /orders/update/{id}</code> → <code>POST /orders/submit/{id}</code>. Result returned to BotPress via inbound signal for closure messaging.
+          </div>
+          <div class="phase-note">BotPress is dormant during Steps 3 &amp; 4; the Proxy + iOS handle the API chain.</div>
+        </div>
+
+        <div class="rules">
+          <h3>Operating Rules</h3>
+          <ol>
+            <li>Before Proceed, the cart lives in BotPress state. CP is never touched for order creation.</li>
+            <li>After <code>create</code>, the order exists in CP with <strong>OPEN status</strong> and its lineItems are locked. To change items, the user starts a new order.</li>
+            <li>If the user exits without confirming, the OPEN order stays as Pending — the bot never calls a cancel API.</li>
+            <li>On resume, the user is offered two choices: <strong>Continue to Submit</strong> or <strong>Start New</strong>.</li>
+            <li>
+              Initial in-cart ordering covers the ~150 firm SKUs. The broader catalog
+              isn't part of this initial ordering scope, but the structure should be
+              <strong>scalable</strong> — eventually we'd like users to order from the broader
+              catalog conversationally as well, which means the item-searching logic
+              has to handle the complexity of natural language across thousands of SKUs.
+              That's a non-trivial design problem and we'd like the architecture to
+              accommodate it from the start.
+            </li>
+          </ol>
+        </div>
+
+        <h3>Cart Modification Window</h3>
+        <p>
+          Item additions, quantity modifications, and deletions are freely available
+          during <strong>Step 1 only</strong>. From Step 2 onward (after <code>create</code>),
+          line items are locked. The user can still cancel and start a new order, but
+          the existing OPEN order isn't edited.
+        </p>
+
+        <div class="callout">
+          <strong>This is our initial design direction.</strong> If BotPress sees better
+          patterns for any part of this flow — particularly around state preservation,
+          workflow handoff to native UI, recommendation timing, scalable item
+          searching, or cart modification boundaries — we welcome the input and would
+          refine accordingly.
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-4">
+        <h2><span class="num">04</span>API Integration Scope</h2>
+        <div class="intent">
+          How the order flow's API calls are organized. All calls — whether
+          originating from BotPress or from the iOS app — route through our
+          <strong>.NET Proxy</strong>, which will be the single integration boundary to
+          CP. The Proxy is in development; its dedicated documentation will be
+          shared when ready. Endpoint shapes for the calls BotPress initiates are
+          included in the API Reference section at the end of this document.
+        </div>
+
+        <h3>Single integration boundary — the .NET Proxy</h3>
+        <p>
+          From BotPress's perspective, there will be one API target: the .NET Proxy.
+          BotPress won't call CP directly. The Proxy handles authentication,
+          payload transformation where needed, logging, and forwarding to CP. CP
+          schemas remain the source of truth for the underlying contracts (visible
+          in the CP Swagger), but the actual request target BotPress hits will be
+          the Proxy.
+        </p>
+        <p style="font-size: 12.5px; color: var(--ink-3);">
+          This keeps CP credentials and connection details contained, simplifies
+          BotPress workflow configuration to a single base URL, and lets us absorb
+          any future CP API changes in the Proxy layer without touching BotPress.
+        </p>
+
+        <h3>BotPress-side calls outside the order flow</h3>
+        <p style="font-size: 13px;">
+          A few calls happen outside the four order steps — mostly session setup
+          and grounding data. All go through the Proxy.
+        </p>
+
+        <div class="card">
+          <table class="doc-table" style="margin: 0; box-shadow: none;">
+            <tr>
+              <td style="width:80px;"><code>GET</code></td>
+              <td><code>/customers?customerNo={no}</code></td>
+              <td class="dimmed">Session enrichment when a user signs in — Proxy fetches account context for the conversation.</td>
+            </tr>
+            <tr>
+              <td><code>GET</code></td>
+              <td><code>/pricing/catalog/{customerNo}</code></td>
+              <td class="dimmed">Account-aware item grounding (price tiers, available SKUs for this account).</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>API Sequence by Step</h3>
+        <p style="font-size: 12.5px; color: var(--ink-3); margin-bottom: 14px;">
+          Step 1 and 2 are initiated by BotPress; Step 3 and 4 by iOS. Every call
+          listed below goes through the Proxy. Request and response shapes for the
+          BotPress-initiated calls (Step 1 estimate, Step 2 create) are in the
+          API Reference section.
+        </p>
+
+        <div class="card">
+          <div class="card-head">Step 1 · Cart <span style="font-weight:400;color:var(--ink-3);font-size:12px;">— BotPress → Proxy → CP</span></div>
+          <table class="doc-table" style="margin:8px 0 0; box-shadow: none;">
+            <tr>
+              <td style="width:80px;"><code>POST</code></td>
+              <td><code>/orders/estimate</code></td>
+              <td class="dimmed">Lightweight call with customerNo + lineItems. Returns price + stock validation for the current cart state.</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="card accent-left">
+          <div class="card-head">Step 2 · Create <span style="font-weight:400;color:var(--ink-3);font-size:12px;">— BotPress → Proxy → CP</span></div>
+          <table class="doc-table" style="margin:8px 0 0; box-shadow: none;">
+            <tr><td style="width:80px;"><code>POST</code></td><td><code>/orders/create</code></td><td class="dimmed">Minimal payload: lineItems + type=SO + caseName. Generates the OPEN order in CP.</td></tr>
+          </table>
+        </div>
+
+        <div class="card gold-left">
+          <div class="card-head">Step 3 · Picker Data <span style="font-weight:400;color:var(--ink-3);font-size:12px;">— iOS → Proxy → CP</span></div>
+          <table class="doc-table" style="margin:8px 0 0; box-shadow: none;">
+            <tr><td style="width:80px;"><code>GET</code></td><td><code>/addresses/shipto</code></td><td class="dimmed">Ship-to dropdown</td></tr>
+            <tr><td><code>GET</code></td><td><code>/contacts/contact</code></td><td class="dimmed">Contact dropdown (fills billTo)</td></tr>
+            <tr><td><code>GET</code></td><td><code>/datadictionary/delivery-options?country={c}</code></td><td class="dimmed">Country-filtered delivery methods</td></tr>
+          </table>
+        </div>
+
+        <div class="card warn-left">
+          <div class="card-head">Step 4 · Finalize <span style="font-weight:400;color:var(--ink-3);font-size:12px;">— iOS → Proxy → CP</span></div>
+          <table class="doc-table" style="margin:8px 0 0; box-shadow: none;">
+            <tr><td style="width:80px;"><code>POST</code></td><td><code>/orders/update/{orderId}</code></td><td class="dimmed">Writes the three picker selections (no lineItems)</td></tr>
+            <tr><td><code>POST</code></td><td><code>/orders/submit/{orderId}</code></td><td class="dimmed">Final validation. OPEN → CONFIRMED. Result signaled back to BotPress for closure messaging.</td></tr>
+          </table>
+        </div>
+
+        <h3>Resume &amp; Result Handoff</h3>
+        <p>
+          Our current thinking is that BotPress wouldn't need to re-fetch order
+          status from CP just to handle the Step 4 result. Instead:
+        </p>
+        <ul>
+          <li><strong>On success</strong> — the submission success response is signaled back to the conversation, which delivers a closure message inline.</li>
+          <li><strong>On failure</strong> — the failure detail is signaled back as well, so the user can be guided on next steps in the same conversation.</li>
+        </ul>
+        <p>
+          Both outcomes flow back as signals within the same session that initiated
+          submit. For pending state across sessions, see Section 05 — our preference
+          is for that to reset on new sessions, with CP serving as the source of
+          truth when a user later wants to check or resume an earlier order.
+        </p>
+        <p>
+          Fallback paths — what happens if the signal doesn't arrive, if the session
+          has expired by the time it does, if the user re-enters mid-finalization —
+          would benefit from a more deliberate strategy than we've sketched. We'd
+          value BotPress's recommendations on the right pattern here.
+        </p>
+
+        <h3>Authentication</h3>
+        <p>
+          The Proxy handles authentication to CP on behalf of both BotPress and
+          iOS. BotPress only needs to identify the user context (customerNo or
+          equivalent) in its calls to the Proxy — no CP-side credentials live in
+          BotPress.
+        </p>
+
+        <h3>Error Handling Principles</h3>
+        <ul>
+          <li><strong>400 / validation:</strong> user-facing message + retry path.</li>
+          <li><strong>401 / auth:</strong> session refresh, then retry.</li>
+          <li><strong>5xx / server:</strong> graceful message + HITL email digest to internal team.</li>
+          <li><strong>Network / timeout:</strong> one retry, then HITL.</li>
+          <li><strong>Stock unavailable at submit:</strong> block the order, sales redirect.</li>
+        </ul>
+
+        <h3>Idempotency</h3>
+        <ul>
+          <li><code>estimate</code> — safe to retry, read-only.</li>
+          <li><code>create</code> — avoid duplicates within a session (cart-once principle).</li>
+          <li><code>submit</code> — must never be called twice (financial-transaction safety).</li>
+        </ul>
+
+        <div class="conventions">
+          <h3>Conventions</h3>
+          <ul>
+            <li><code>type</code> is always <code>"SO"</code> (Stock Order)</li>
+            <li><code>caseName</code> uses prefix <code>TruAgent-{timestamp}</code></li>
+            <li>BotPress never updates <code>lineItems</code> via the update endpoint</li>
+          </ul>
+        </div>
+
+        <div class="open-q-list">
+          <h3>Open questions for BotPress</h3>
+          <ol>
+            <li>BotPress-native pattern for HTTP API calls (to the Proxy) — built-in HTTP nodes, custom actions, or other?</li>
+            <li>Recommended idempotency lock for <code>submit</code>?</li>
+            <li>Retry logic at workflow level vs HTTP layer?</li>
+            <li><strong>Fallback design.</strong> How should fallback paths (API failures, ambiguous user input, dormant-state expiry, mid-flow exits, missing result signals) be designed organically inside the BotPress workflow rather than bolted on? We'd value BotPress's view on building these in from the start.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-5">
+        <h2><span class="num">05</span>iOS Signal Contract<span class="tag draft">Draft</span></h2>
+        <div class="intent">
+          Starting-point proposal for the structured events exchanged between the
+          bot and iOS via the .NET Proxy. Some items below require BotPress's
+          confirmation before we finalize.
+        </div>
+
+        <h3>Approach</h3>
+        <p>
+          Most conversation is plain text in / plain text out. At specific moments
+          BotPress needs to trigger <strong>native iOS UI</strong> (login sheet, address picker,
+          order detail view) or carry <strong>structured data</strong> (cart, order result).
+          These moments are encoded as <strong>signals</strong> — structured events embedded
+          in the standard message payload.
+        </p>
+
+        <h3>Order Finalization Split</h3>
+        <p>
+          In our current sketch, once <code>ORDER_SUBMIT_GATE</code> goes out,
+          BotPress's role pauses while the Proxy handles the CP API update + submit
+          chain. iOS then reports the final result back via <code>ORDER_RESULT</code>,
+          and BotPress picks back up for closure messaging. The intent is to keep
+          the heavier, more failure-prone part of the flow outside the conversation
+          layer — but we'd like to hear whether this kind of pause-and-resume sits
+          well with how BotPress workflows are typically built.
+        </p>
+
+        <h3>Outbound Signals — Bot → iOS</h3>
+
+        <p style="font-size: 13px;">
+          A shape we've been considering for outbound messages — not finalized.
+          We'd value BotPress's guidance on what's most natural for BotPress
+          communication patterns, and what we should adjust:
+        </p>
+        <div class="code-block">{
+  "text": "&lt;chat bubble content; may be empty&gt;",
+  "payload": {
+    "event": "&lt;EVENT_NAME&gt;",
+    "data": { ... },
+    "voiceMode": "off" | null,
+    "buttons": [{ "label": "...", "value": "..." }] | null,
+    "followUpSuggestions": ["...", "..."] | null
+  }
+}</div>
+
+        <p style="font-size: 13px; color: var(--ink-3);">
+          The signal catalog below is similarly a working set — events we've
+          identified as needed, with rough data shapes. The actual structure should
+          follow whatever BotPress recommends.
+        </p>
+
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th style="width:24%">Signal</th>
+              <th style="width:36%">When emitted</th>
+              <th>Key data</th>
+              <th style="width:10%">voiceMode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="signal-name">SESSION_INIT</td><td>Once per session, after auth/state setup</td><td><code>mode</code> (login / non-login), <code>user</code></td><td class="dimmed">—</td></tr>
+            <tr><td class="signal-name">BOT_RESPONSE</td><td>Default for all conversational replies</td><td>may carry <code>buttons</code> / <code>followUpSuggestions</code></td><td class="dimmed">—</td></tr>
+            <tr><td class="signal-name future">COUNTRY_REQUIRED<span class="tag future">future</span></td><td class="future">Anonymous user flow (not in Phase 1)</td><td class="future">{}</td><td class="future">off</td></tr>
+            <tr><td class="signal-name">LOGIN_REQUIRED</td><td>Surfaced when a non-login user attempts an action that needs authentication (ordering, account-specific Q&amp;A, order history). Accompanying message would guide them to log in, with a pointer to sign-up for users without an account.</td><td><code>reason</code>, optional <code>signupLink</code></td><td class="dimmed">—</td></tr>
+            <tr><td class="signal-name">RESUME_PROMPT</td><td>Surfaced mid-conversation — when the user asks about a previous order or starts a new order intent while a pending order exists in CP</td><td><code>pendingOrderId</code>, <code>pendingOrderSummary</code>, <code>orderLink</code></td><td class="dimmed">—</td></tr>
+            <tr><td class="signal-name">ORDER_PREVIEW</td><td>Cart confirmed by user, before submit</td><td><code>source</code> (fresh/resume), <code>cart</code>, <code>totals</code></td><td class="dimmed">—</td></tr>
+            <tr><td class="signal-name">ORDER_SUBMIT_GATE</td><td>After Yes-to-submit + OPEN order created in CP</td><td><code>orderId</code>, <code>cart</code>, <code>totals</code></td><td><code>off</code></td></tr>
+            <tr><td class="signal-name">ORDER_SUCCESS</td><td>After inbound <code>ORDER_RESULT</code> with status=success</td><td><code>orderNo</code>, <code>orderLink</code>, <code>submittedAt</code>, full submission detail</td><td><code>off</code></td></tr>
+            <tr><td class="signal-name">ORDER_FAILURE</td><td>After inbound <code>ORDER_RESULT</code> with status=failure</td><td><code>orderId</code>, <code>errorCode</code>, <code>errorMessage</code></td><td><code>off</code></td></tr>
+            <tr><td class="signal-name">OPEN_ORDER_LINK</td><td>User asks for a web link to an order</td><td><code>orderNo</code>, <code>url</code></td><td class="dimmed">—</td></tr>
+            <tr><td class="signal-name">HITL_TRIGGERED</td><td>Persistent API failure, human-help request, out-of-scope</td><td><code>triggerType</code>, <code>userFacingMessage</code></td><td class="dimmed">—</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Inbound Events — iOS → Bot</h3>
+        <p style="font-size: 13px;">
+          Plain user text is sent as regular <code>type: "text"</code> messages.
+          Structured events use the proposed <code>type: "custom"</code> shape:
+        </p>
+        <div class="code-block">{
+  "type": "custom",
+  "payload": {
+    "event": "&lt;EVENT_NAME&gt;",
+    "data": { ... }
+  }
+}</div>
+
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Event</th>
+              <th style="width:40%">When sent</th>
+              <th>Key data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="signal-name future">COUNTRY_SELECTED<span class="tag future">future</span></td><td class="future">Anonymous user completes country picker</td><td class="future"><code>userCountry</code></td></tr>
+            <tr><td class="signal-name">LOGIN_COMPLETED</td><td>Guest authenticates successfully</td><td><code>displayName</code>, <code>accountType</code></td></tr>
+            <tr><td class="signal-name">RESUME_DECISION</td><td>User taps Resume or Discard on resume prompt</td><td><code>action</code> (resume / discard), <code>pendingOrderId</code></td></tr>
+            <tr><td class="signal-name">ORDER_RESULT</td><td>Proxy completes order finalization (success or failure)</td><td>Success: <code>status</code>, <code>orderNo</code>, full submission detail · Failure: <code>status</code>, <code>orderId</code>, <code>errorCode</code>, <code>errorMessage</code></td></tr>
+            <tr><td class="signal-name">ORDER_CANCELLED_BY_USER</td><td>User cancels the native picker without submitting</td><td><code>orderId</code></td></tr>
+          </tbody>
+        </table>
+
+        <p style="font-size:12.5px; color: var(--ink-3);">
+          Note: address picker selections (shipTo, billTo, delivery) are <strong>not</strong>
+          sent back to BotPress. The Proxy handles them through the update + submit
+          chain, and only the final <code>ORDER_RESULT</code> reaches BotPress.
+        </p>
+
+        <h3>Voice Mode in Signals</h3>
+        <p>
+          Voice mode lives on the iOS client side — it's not something BotPress
+          needs to track. When voice mode is on, user speech is converted to text
+          via STT before reaching BotPress, and BotPress responses are converted to
+          speech via TTS on the way back. From BotPress's perspective, every turn
+          is plain text in and plain text out, regardless of whether voice is on.
+        </p>
+        <p>
+          In our sketch, BotPress could optionally include
+          <code>voiceMode: "off"</code> on outbound messages as a hint to the
+          client to suppress TTS at structured moments (submit gate, order success
+          / failure). iOS would read this as a mute override, and voice would stay
+          off until the user re-enables manually. Whether this lives in the payload
+          or as something else BotPress-native is open.
+        </p>
+
+        <h3>Images in Signals</h3>
+        <p>
+          The cart preview (and possibly some product Q&amp;A responses) should
+          include item images, as noted in the order flow section. We'd value
+          BotPress's recommendation on the cleanest way to carry image data in the
+          message payload — image URLs in the data object, separate attachment
+          fields, or another pattern. The image data itself is available on our
+          side; this is about how the signal references it.
+        </p>
+
+        <h3>Pending Order Handling</h3>
+        <ul>
+          <li><strong>Within a single session:</strong> we'd see BotPress holding the pending order reference in conversation state. If the user mentions a new order intent while one's still pending, the bot can surface an inline Yes/No "discard pending and start new?" prompt.</li>
+          <li><strong>Across sessions:</strong> our preference is for pending state <strong>not</strong> to carry forward. A new session starts fresh, and if the user wants to check or resume a previous order, the bot can look it up via CP at that point.</li>
+          <li><strong>"Discard" semantics:</strong> clears the pending reference held in the current session. The CP-side order stays as a dummy OPEN entry — intentional, no CP cleanup call from the bot.</li>
+        </ul>
+
+        <div class="callout">
+          The cross-session reset is a deliberate simplification on our side —
+          keeping the conversation layer light and letting CP be the source of truth
+          for order status. If a returning user needs a "you have a pending order"
+          surface, the iOS app can handle it via its own CP API lookup at session
+          start. Open to BotPress's view on whether this division makes sense or
+          whether you'd recommend something different.
+        </div>
+
+        <div class="open-q-list">
+          <h3>Open questions for BotPress</h3>
+          <ol>
+            <li><strong>Inbound structured events.</strong> What's the ADK-native pattern for clients to send structured events (not plain text) that workflow nodes can read and branch on? Our draft assumes <code>{ type: "custom", payload: { event, data } }</code>. Is this right? How does a workflow node read <code>payload.event</code>?</li>
+            <li><strong>Outbound payload structure.</strong> Can outbound BotPress messages carry arbitrary metadata fields in the payload (e.g., <code>voiceMode</code>, <code>buttons</code>, <code>followUpSuggestions</code>)? Or do these need to use BotPress-standard fields? In ADK, what's the canonical shape?</li>
+            <li><strong>Buttons and quick replies.</strong> How are inline buttons represented in ADK Chat API responses? Are tapped buttons sent back as plain text matching the button value, or as structured events?</li>
+            <li>
+              <strong>Follow-up suggestions array (sales tool).</strong> As a sales agent,
+              every BotPress response is a potential moment to surface a relevant next
+              step. We'd like BotPress to optionally return a small array (around three)
+              of follow-up question suggestions per message — strings the iOS app can
+              render as tappable chips, similar to how chat apps offer quick replies.
+              The app may show all, some, or none depending on context. Is this kind
+              of metadata array supported in the outbound payload?
+            </li>
+            <li><strong>Transactional ordering mode — trigger and cart management.</strong> The bot needs to distinguish generic ordering interest ("how much is X?") from transactional ordering intent ("order one for me"). We'd value BotPress's view on the cleanest way to trigger transactional mode and keep cart management organically tied to it — including how the bot can switch back to generic mode and preserve cart state when needed.</li>
+            <li><strong>Conversation dormancy.</strong> After <code>ORDER_SUBMIT_GATE</code>, BotPress may wait 30 seconds to several minutes for <code>ORDER_RESULT</code>. What's the idle timeout? Configurable? What happens to conversation state if it expires?</li>
+            <li><strong>Multi-client single bot.</strong> The same BotPress bot will eventually serve iOS and a future custom web client. Any per-client patterns we should know about?</li>
+            <li><strong>Conversation state handling for in-progress orders.</strong> The cart (pre-create) and pending-order reference (post-create) live in conversation state. We'd like to understand how state like this is best handled across the different moments — across turns within a session, across a dormant window while iOS finalizes, and across sessions if the user returns later. We're less looking for raw TTL numbers and more for the right pattern given each situation.</li>
+            <li><strong>Non-login user session data injection.</strong> Non-login users enter first name, phone, and email at the start. What's the recommended way to inject this kind of custom session data into a BotPress conversation, and have it available throughout the workflow?</li>
+          </ol>
+        </div>
+
+        <div class="callout">
+          Where ADK constraints differ from what we've drawn, we'll adapt. The
+          intent here is to share a starting-point proposal — what's most natural
+          to BotPress is what we'd like to follow.
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-6">
+        <h2><span class="num">06</span>Business Rules Summary</h2>
+        <div class="intent">
+          Key principles at a high level. Many specific rules already exist in our
+          prototype's orchestration; this summary highlights what matters most and
+          flags where continued discussion is expected.
+        </div>
+
+        <h3>Key Principles</h3>
+        <ul>
+          <li><strong>Item searching, matching, and compatibility checks must be precise.</strong> Compound item descriptions (brand + size + system embedded in name) need a robust matching strategy — see Section 02.</li>
+          <li><strong>Clarification gate when uncertain.</strong> When a user query is ambiguous (third-party brand mentioned without product context, vague intent, missing key parameter), the bot should ask one focused clarifying question rather than guessing.</li>
+          <li><strong>Honest redirect when data unavailable.</strong> For items or topics outside the bot's reach, redirect to the appropriate contact rather than fabricating.</li>
+        </ul>
+
+        <h3>Ordering Scope &amp; Scalability</h3>
+        <p>
+          The initial in-cart ordering scope covers the <strong>~150 firm SKUs</strong>
+          — the six Product Family Kits and their internal stock components. The
+          broader catalog of several thousand stock items isn't covered by this
+          initial scope, but it is firmly in the longer-term picture.
+        </p>
+        <p>
+          For that reason, <strong>scale-up structure needs to be reflected in the
+          architecture from the start</strong> — not retrofitted later. The challenge
+          with the broader catalog is the natural-language matching: items embed
+          multiple dimensions in their names (brand, size, system, variant — see
+          Section 02), and user phrasings around them are correspondingly varied.
+          What we'd like from BotPress is a view on the strategy and structure for
+          handling this at scale:
+        </p>
+        <ul>
+          <li>Is there a feasible path to in-cart ordering across the broader catalog conversationally? If yes, what would the structure look like?</li>
+          <li>If full-catalog ordering isn't feasible in one step, what's a reasonable intermediate scope — specific item categories that are tractable first, before expanding outward?</li>
+          <li>How should the initial architecture be shaped so the broader catalog can be folded in later without rebuilding the order flow?</li>
+        </ul>
+        <p>
+          Conversational handling of the broader catalog for Q&amp;A and lookup is
+          a separate matter and a positive outcome if achievable in this engagement.
+        </p>
+
+        <div class="callout">
+          Additional business rules will emerge through continued discussion as the
+          design evolves. This summary is not exhaustive — we expect to polish
+          these together in subsequent scoping phases. We'll surface specific
+          existing-system context (rule details, routing logic, etc.) as BotPress
+          asks for it during scoping.
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-7">
+        <h2><span class="num">07</span>User Utterance Examples</h2>
+        <div class="intent">
+          A sense of what real user conversations look like. Not exhaustive — these
+          are representative scenarios meant to ground retrieval and conversation
+          design decisions.
+        </div>
+
+        <h3>User Population</h3>
+        <p>
+          Users are dental professionals — both <strong>dentists (clinicians)</strong>
+          and <strong>dental lab specialists</strong>. They speak in clinical and
+          technical terms specific to dental implantology, not in SKU codes. Korean
+          and English are sometimes mixed in the same query.
+        </p>
+        <p style="font-size:12.5px;color:var(--ink-3);">
+          A note on the bot lines below — they're written so the same wording works
+          for both screen and voice. The screen is always on (whether voice mode is
+          enabled or not), so phrasing has to read cleanly visually first. Items
+          like SKU codes, prices, and emails are written in their standard form;
+          modern TTS handles them naturally without needing them spelled out.
+        </p>
+
+        <h3>Sample Conversations</h3>
+
+        <div class="convo">
+          <div class="convo-title">1 · Direct ordering — clean path</div>
+          <div class="line user">I want to order one ioConnect Kit for AOT.</div>
+          <div class="line bot">Got it. One ioConnect Kit for AOT. The item code is IOK-AT, and it's $3,000. Shall I add it to your cart?</div>
+          <div class="line user">Yes please.</div>
+          <div class="line bot">Added. Anything else you'd like, or shall we proceed?</div>
+          <div class="note">Clear item, clear quantity. SKU and price are surfaced as natural references — both read fine on screen and pass through TTS cleanly.</div>
+        </div>
+
+        <div class="convo">
+          <div class="convo-title">2 · Ambiguous third-party reference — clarification needed</div>
+          <div class="line user">I use Ritter MUA systems, what should I use?</div>
+          <div class="line bot">Happy to help figure that out. Are you looking for a scan-body solution for full-arch cases, a passive-fit reamer, or something else? That'll help me narrow which TruAbutment product fits your Ritter workflow.</div>
+          <div class="note">Third-party implant brand is named, but no specific TruAbutment product. The bot asks one focused clarification rather than guessing.</div>
+        </div>
+
+        <div class="convo">
+          <div class="convo-title">3 · Cart modification mid-flow</div>
+          <div class="line user">Add the Tru Reamer Kit for Straumann too.</div>
+          <div class="line bot">Done. One Tru Reamer Kit for Straumann (TRMK01-ST) at $890. Your cart has two items now.</div>
+          <div class="line user">Actually make the ioConnect two.</div>
+          <div class="line bot">Updated. Two ioConnect Kits for AOT and one Tru Reamer Kit for Straumann. Cart total is $6,890. Ready to proceed?</div>
+          <div class="note">Free add and modify during the cart step. SKU references and prices are written in standard form — natural to read on screen and handled cleanly by TTS in voice mode.</div>
+        </div>
+
+        <div class="convo">
+          <div class="convo-title">4 · Non-login user attempts ordering</div>
+          <div class="line user">Can I place an order for the ioConnect AOT kit?</div>
+          <div class="line bot">Ordering is available once you log in with your Customer Portal account, since prices and shipping are tied to your account. If you have one, you can log in from the menu. If not, you can sign up on our customer portal. Want me to share the link?</div>
+          <div class="note">Non-login user attempts an authentication-gated action. The bot guides toward login and offers a sign-up path.</div>
+        </div>
+
+        <div class="convo">
+          <div class="convo-title">5 · Resume prompt mid-conversation</div>
+          <div class="line user">What happened to the order I started yesterday?</div>
+          <div class="line bot">I see one still pending. One ioConnect Kit for AOT (IOK-AT), not yet submitted. Want to pick up where you left off, or start a new one?</div>
+          <div class="line user">Let's continue with it.</div>
+          <div class="line bot">Picking up where you left off. Ready to submit?</div>
+          <div class="note">Pending state isn't auto-surfaced at session start. It comes up when the user mentions a prior order or starts a new order intent. CP remains the source of truth for pending status.</div>
+        </div>
+
+        <div class="convo">
+          <div class="convo-title">6 · Broader-catalog item — outside ordering scope</div>
+          <div class="line user">Do you have a TruBase abutment for Astra Tech 4.2?</div>
+          <div class="line bot">TruBase is part of our broader catalog, not in the kits I can place orders for right now. For the specific variant and availability, our sales team can confirm and help directly. You can reach them at sales@truabutment.com. Want me to share that contact?</div>
+          <div class="note">Item is outside the initial in-cart scope. The bot acknowledges, doesn't invent details, and redirects naturally.</div>
+        </div>
+
+        <div class="callout">
+          These are illustrative. The bot lines are written to read cleanly on
+          screen and pass through TTS naturally when voice mode is on — the same
+          wording works for both. We can provide more examples or specific clinical
+          term references as needed during development.
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-8">
+        <h2><span class="num">08</span>Priority for First Response</h2>
+        <div class="intent">
+          A few questions surfaced throughout this document carry the most weight
+          for unblocking work on our side — iOS app development, .NET Proxy
+          architecture, and conversation tone direction all depend on these. We've
+          grouped them here as the items we'd most value early input on, before
+          full scoping.
+        </div>
+
+        <div class="card">
+          <div class="card-head">1 · ADK Chat API — structural constraints</div>
+          <p style="margin:0;font-size:13px;color:var(--ink-2);">
+            What are the structural limits of the ADK Chat API around message
+            payloads? Specifically: can outbound messages carry arbitrary custom
+            metadata fields (signals, buttons, follow-up suggestions, voice hints,
+            image references) within the standard payload, or do these need to
+            conform to specific BotPress-defined fields? Understanding this shapes
+            how the iOS client and the Proxy parse and pass messages — we'd like to
+            know before locking either side's structure.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">2 · Event signals — fully customizable?</div>
+          <p style="margin:0;font-size:13px;color:var(--ink-2);">
+            Section 05 sketches a signal contract (outbound BotPress → iOS events
+            like <code>ORDER_SUBMIT_GATE</code>, <code>RESUME_PROMPT</code>, and
+            inbound iOS → BotPress events like <code>RESUME_DECISION</code>,
+            <code>ORDER_RESULT</code>). Can these be fully defined and routed on
+            both directions in ADK, or are there constraints we should design
+            around? If structured inbound events aren't well supported, the iOS
+            app and Proxy will need a different translation pattern.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">3 · Voice mode response strategy</div>
+          <p style="margin:0 0 8px 0;font-size:13px;color:var(--ink-2);">
+            Because BotPress responses go through TTS unmodified when voice mode is
+            on, the response style matters a lot. Two paths we're considering:
+          </p>
+          <ul style="margin:0 0 8px 0;padding-left:20px;font-size:13px;color:var(--ink-2);">
+            <li><strong>Two response tracks per turn</strong> — BotPress returns both a voice-optimized version and a screen-optimized version in the payload, and the iOS client picks based on current voice state.</li>
+            <li><strong>Single middle-ground tone</strong> — one response style designed to work for both screen and voice, accepting the trade-off.</li>
+          </ul>
+          <p style="margin:0;font-size:13px;color:var(--ink-2);">
+            Is the two-track approach feasible in ADK? If not, single middle-ground
+            is what we'd pursue. This decision affects KB content phrasing,
+            orchestration instructions, and the iOS rendering layer — it's worth
+            settling early.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">4 · What else should we know before Proxy &amp; iOS dev starts?</div>
+          <p style="margin:0;font-size:13px;color:var(--ink-2);">
+            Beyond the above, are there BotPress-side constraints, configuration
+            requirements, or architectural realities we should bake into our Proxy
+            and iOS design from day one — things that are harder to retrofit
+            later? Authentication patterns, session management, multi-client
+            considerations, rate limits, anything that would meaningfully shape
+            how we build on our side.
+          </p>
+        </div>
+
+        <div class="callout">
+          The other questions raised throughout this document are also genuinely
+          open — we'd welcome input on all of them in due course. The four above
+          are simply the ones blocking the most upstream decisions, and where
+          early answers would have the biggest impact on how we shape iOS and
+          Proxy work in parallel with BotPress's build.
+        </div>
+      </section>
+
+      <section class="doc-section" id="sec-9">
+        <h2><span class="num">REF</span>API Reference</h2>
+        <div class="intent">
+          Request and response shapes for the CP endpoints that BotPress will
+          interact with through the Proxy. The Proxy will mirror these contracts
+          closely — field names and shapes shown below are what BotPress workflows
+          will work with. Endpoints related to Step 3 and Step 4 (ship-to, contact,
+          delivery method selection, order finalization) are handled by the iOS
+          client and are omitted here.
+        </div>
+
+        <p style="font-size: 12.5px; color: var(--ink-3); margin-bottom: 20px;">
+          Base URL is environment-dependent and will be shared separately. Paths
+          shown reflect the underlying CP contract (the Proxy will expose
+          equivalent endpoints under its own base). All requests use
+          <code>Content-Type: application/json</code> and a bearer token in the
+          <code>Authorization</code> header.
+        </p>
+
+        <!-- ============ ESTIMATE ============ -->
+        <div class="card" style="padding: 20px 22px;">
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;">
+            <span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: var(--phase-green); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em;">POST</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 13px; font-weight: 600; color: var(--ink);">/orders/estimate</span>
+          </div>
+          <p style="margin: 0 0 14px 0; font-size: 12.5px; color: var(--ink-3);">
+            Used in <strong>Step 1 (Cart)</strong>. Lightweight call that validates
+            line items against pricing and stock for a given customer. Called each
+            time the cart changes; safe to retry, read-only.
+          </p>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 12px 0 6px;">Request</div>
+          <div class="code-block">{
+  "customerNo": "TEST_CUSTOMER_01",
+  "items": [
+    { "itemNo": "IOK-AT",  "qty": 1 },
+    { "itemNo": "IOK-UR",  "qty": 2 },
+    { "itemNo": "TRMK01-ST", "qty": 1 }
+  ]
+}</div>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 16px 0 6px;">Response — 200 OK</div>
+          <div class="code-block">{
+  "status": "success",
+  "processedItems": [
+    {
+      "itemNo": "IOK-AT",
+      "itemDescription": "ioConnect Kit compatible with AOT",
+      "success": true,
+      "reason": null,
+      "price": 3000.00,
+      "orderedQty": 1,
+      "onhandQty": 24,
+      "stockStatus": "InStock",
+      "subtotal": 3000.00
+    },
+    {
+      "itemNo": "IOK-UR",
+      "itemDescription": "ioConnect Kit compatible with URIS",
+      "success": true,
+      "reason": null,
+      "price": 3000.00,
+      "orderedQty": 2,
+      "onhandQty": 11,
+      "stockStatus": "InStock",
+      "subtotal": 6000.00
+    },
+    {
+      "itemNo": "TRMK01-ST",
+      "itemDescription": "Tru Reamer Kit compatible with Straumann",
+      "success": true,
+      "reason": null,
+      "price": 890.00,
+      "orderedQty": 1,
+      "onhandQty": 8,
+      "stockStatus": "InStock",
+      "subtotal": 890.00
+    }
+  ],
+  "summarize": {
+    "successCount": 3,
+    "totalAmount": 9890.00
+  }
+}</div>
+
+          <p style="font-size: 12px; color: var(--ink-3); margin: 12px 0 0;">
+            Each line item carries its own <code>success</code> flag and a
+            <code>reason</code> when not successful (e.g., invalid item, out of
+            stock). A line failure does not fail the whole call — the bot can
+            communicate per-item status to the user.
+          </p>
+        </div>
+
+        <!-- ============ CREATE ============ -->
+        <div class="card accent-left" style="padding: 20px 22px;">
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;">
+            <span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: var(--phase-green); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em;">POST</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 13px; font-weight: 600; color: var(--ink);">/orders/create</span>
+          </div>
+          <p style="margin: 0 0 14px 0; font-size: 12.5px; color: var(--ink-3);">
+            Used in <strong>Step 2 (Create)</strong>. Generates an OPEN order in CP
+            from the locked-in cart. BotPress sends a minimal payload —
+            <code>shipTo</code>, <code>contact</code>, and
+            <code>deliveryMethod</code> are filled in later by iOS during finalize
+            (Step 4).
+          </p>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 12px 0 6px;">Request</div>
+          <div class="code-block">{
+  "customerNo": "TEST_CUSTOMER_01",
+  "type": "SO",
+  "caseName": "TruAgent-20260514093210",
+  "lineItems": [
+    { "itemNo": "IOK-AT",   "qty": 1 },
+    { "itemNo": "TRMK01-ST", "qty": 1 }
+  ]
+}</div>
+          <p style="font-size: 12px; color: var(--ink-3); margin: 8px 0 0;">
+            <code>type</code> is always <code>"SO"</code> (Stock Order).
+            <code>caseName</code> uses the <code>TruAgent-{timestamp}</code> prefix
+            convention so agent-created orders are identifiable on the CP side.
+            <code>referenceNo</code> is optional.
+          </p>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 16px 0 6px;">Response — 200 OK</div>
+          <div class="code-block">{
+  "status": "success",
+  "order": {
+    "id": 1024753,
+    "orderDate": "2026-05-14T09:32:11.4521",
+    "subtotalAmount": 3890.00,
+    "lineItems": [
+      {
+        "itemCode": "IOK-AT",
+        "success": true,
+        "price": 3000.00,
+        "orderedQty": 1,
+        "onhandQty": 24,
+        "stockStatus": "InStock",
+        "subtotal": 3000.00
+      },
+      {
+        "itemCode": "TRMK01-ST",
+        "success": true,
+        "price": 890.00,
+        "orderedQty": 1,
+        "onhandQty": 8,
+        "stockStatus": "InStock",
+        "subtotal": 890.00
+      }
+    ]
+  }
+}</div>
+
+          <p style="font-size: 12px; color: var(--ink-3); margin: 12px 0 0;">
+            <code>order.id</code> is the orderId BotPress stores as the pending
+            order reference and passes downstream into Step 4. The user-facing
+            order link is then constructed via
+            <code>tshop.truabutment.com/Order/StockItem/{id}</code>.
+          </p>
+        </div>
+
+        <!-- ============ CUSTOMERS ============ -->
+        <div class="card" style="padding: 20px 22px;">
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;">
+            <span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em;">GET</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 13px; font-weight: 600; color: var(--ink);">/customers?customerNo={no}</span>
+          </div>
+          <p style="margin: 0 0 14px 0; font-size: 12.5px; color: var(--ink-3);">
+            Account enrichment at session start for logged-in users. Pulls
+            business name, contact info, and salesperson references into the
+            conversation context.
+          </p>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 12px 0 6px;">Response — 200 OK</div>
+          <div class="code-block">{
+  "id": 8421,
+  "customerNo": "TEST_CUSTOMER_01",
+  "type": "Lab",
+  "code": "GKY01",
+  "businessName": "GKY DENTAL ARTS INC",
+  "phone": "310-214-8007",
+  "email": "info@gkydental.com",
+  "billToCode": "90504BIL",
+  "shipToCode": "90504SHP",
+  "contactCode": "CONT-006880",
+  "priceGroup": "TIER_B",
+  "paymentMethodCode": "NET30",
+  "salespersonCode": "JAY",
+  "blocked": null
+}</div>
+
+          <p style="font-size: 12px; color: var(--ink-3); margin: 12px 0 0;">
+            Response includes additional fields (tax exemption, ar terms, sub-codes,
+            etc.) — fields shown are the ones most relevant for conversation
+            grounding. <code>priceGroup</code> drives account-specific pricing on
+            subsequent calls.
+          </p>
+        </div>
+
+        <!-- ============ PRICING CATALOG ============ -->
+        <div class="card" style="padding: 20px 22px;">
+          <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;">
+            <span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em;">GET</span>
+            <span style="font-family: ui-monospace, monospace; font-size: 13px; font-weight: 600; color: var(--ink);">/pricing/catalog/{customerNo}</span>
+          </div>
+          <p style="margin: 0 0 8px 0; font-size: 12.5px; color: var(--ink-3);">
+            Account-aware item catalog. Returns the <strong>entire item catalog</strong>
+            available to a given customer in a single call — including the initial
+            ~150 SKUs and the broader stock catalog (several thousand items).
+            Each entry carries the account-specific price tier and current stock.
+          </p>
+          <p style="margin: 0 0 14px 0; font-size: 12.5px; color: var(--ink-3);">
+            Because of the response size, how this is consumed in BotPress matters
+            — likely cached at session start rather than re-fetched per query, or
+            consulted through a lookup tool. We'd value BotPress's recommendation
+            on the cleanest pattern for grounding item-level questions against a
+            response of this scale.
+          </p>
+
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 12px 0 6px;">Response — 200 OK (array, truncated)</div>
+          <div class="code-block">[
+  {
+    "itemNo": "IOK-AT",
+    "itemDescription": "ioConnect Kit compatible with AOT",
+    "regularPrice": 3500.00,
+    "bestPrice": 3000.00,
+    "onhandQty": 24,
+    "stockStatus": "InStock"
+  },
+  {
+    "itemNo": "IOK-UR",
+    "itemDescription": "ioConnect Kit compatible with URIS",
+    "regularPrice": 3500.00,
+    "bestPrice": 3000.00,
+    "onhandQty": 11,
+    "stockStatus": "InStock"
+  },
+  {
+    "itemNo": "TRMK01-ST",
+    "itemDescription": "Tru Reamer Kit compatible with Straumann",
+    "regularPrice": 1100.00,
+    "bestPrice": 890.00,
+    "onhandQty": 8,
+    "stockStatus": "InStock"
+  },
+  {
+    "itemNo": "HSS-GD47",
+    "itemDescription": "HS Cap Small compatible with Global D 4.7",
+    "regularPrice": 95.00,
+    "bestPrice": 78.00,
+    "onhandQty": 152,
+    "stockStatus": "InStock"
+  }
+]</div>
+
+          <p style="font-size: 12px; color: var(--ink-3); margin: 12px 0 0;">
+            Sample above shows four items; the actual array spans the customer's
+            full visible catalog. <code>regularPrice</code> is the MSRP;
+            <code>bestPrice</code> is the account-specific tier price. For
+            logged-in users the bot quotes <code>bestPrice</code>; for non-login
+            users (when applicable) the bot quotes <code>regularPrice</code>.
+          </p>
+        </div>
+
+        <div class="callout">
+          These four endpoints cover what BotPress directly interacts with. The
+          remaining endpoints in the CP API (ship-to, contact, delivery options,
+          update, submit, order history) are handled by the iOS client through the
+          Proxy and are out of scope for BotPress workflow design. Full Proxy
+          documentation will be shared once Proxy development is in progress.
+        </div>
+      </section>
+
+      <footer class="doc-footer">
+        <span>For BotPress Vendor Review</span>
+        <span>TruAbutment Inc. — Internal vendor reference</span>
+      </footer>
+
+    </div>
+    <!-- END version v1.0 -->
+
+  </main>
+</div>
+
+<script>
+  // ============ PASSWORD GATE ============
+  // Casual access gate. Not real security — this is to prevent
+  // unintended/casual access to a public GitHub Pages repo.
+  // For real security, server-side auth would be needed.
+
+  const PASSWORD_HASH = '041019dec57e90ce0e4eea84529e3b432697ac935f99ff6fd59e572258493d51';
+  const STORAGE_KEY = 'truabutment_docs_access';
+
+  async function sha256(text) {
+    const buf = new TextEncoder().encode(text);
+    const hashBuf = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hashBuf))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
+  function unlock() {
+    document.body.classList.remove('locked');
+  }
+
+  async function tryUnlock(password) {
+    const hash = await sha256(password);
+    if (hash === PASSWORD_HASH) {
+      sessionStorage.setItem(STORAGE_KEY, hash);
+      unlock();
+      return true;
+    }
+    return false;
+  }
+
+  // Check existing session
+  (function() {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (stored === PASSWORD_HASH) {
+      unlock();
+    }
+  })();
+
+  // Gate UI handlers
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('gateInput');
+    const btn = document.getElementById('gateBtn');
+    const error = document.getElementById('gateError');
+
+    if (!input || !btn) return;
+
+    async function submit() {
+      const pw = input.value.trim();
+      if (!pw) return;
+
+      const ok = await tryUnlock(pw);
+      if (!ok) {
+        error.textContent = 'Incorrect password.';
+        input.classList.add('shake');
+        input.value = '';
+        setTimeout(() => input.classList.remove('shake'), 400);
+        input.focus();
+      } else {
+        error.textContent = '';
+      }
+    }
+
+    btn.addEventListener('click', submit);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') submit();
+      else error.textContent = '';
+    });
+  });
+
+  // ============ Version switcher ============
+  // To add a new version (e.g., v1.1):
+  //   1. Add <option value="v1.1">v1.1 — YYYY-MM-DD</option> to the <select>, mark as selected
+  //   2. Remove `selected` from the previous option
+  //   3. Add a new <div class="version-content" data-version="v1.1"> ... </div> block in <main>
+  //   4. Update the topbar "Updated" date and "Modified by" if changed
+  function switchVersion(version) {
+    document.querySelectorAll('.version-content').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`.version-content[data-version="${version}"]`);
+    if (target) target.classList.add('active');
+
+    const select = document.getElementById('version');
+    const isLatest = select.selectedIndex === 0;
+    const badge = document.querySelector('.version-badge');
+    if (isLatest) {
+      badge.textContent = 'Latest';
+      badge.style.background = 'var(--accent-soft)';
+      badge.style.color = 'var(--accent-2)';
+    } else {
+      badge.textContent = 'Archive';
+      badge.style.background = 'var(--bg-soft)';
+      badge.style.color = 'var(--ink-3)';
+    }
+  }
+
+  // Scroll spy — highlight current section in sidebar
+  (function() {
+    const sections = document.querySelectorAll('section.doc-section');
+    const navLinks = document.querySelectorAll('nav.sidebar ol li a');
+
+    function setActive() {
+      const scrollPos = window.scrollY + 120;
+      let current = sections[0];
+      sections.forEach(sec => {
+        if (sec.offsetTop <= scrollPos) current = sec;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    window.addEventListener('scroll', setActive, { passive: true });
+    window.addEventListener('load', setActive);
+    setActive();
+  })();
+
+  // Smooth scroll for sidebar nav clicks
+  document.querySelectorAll('nav.sidebar ol li a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
