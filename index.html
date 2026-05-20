@@ -1120,57 +1120,53 @@
           <li><strong>No autonomous orders or medical decisions.</strong> The user always confirms; the bot never advises clinical choices.</li>
         </ul>
 
-        <h3>Engagement Topics</h3>
-        <p>
-          Topics we'd like to shape together with BotPress in this engagement.
-          Flagged upfront so they can be reflected in scoping and proposed
-          deliverables.
-        </p>
+        <div style="margin: 32px 0 0; padding: 22px 24px; background: var(--accent-soft); border: 1.5px solid var(--accent-2); border-radius: 8px;">
+          <div style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent-2); text-transform: uppercase; margin-bottom: 8px;">Scope of this Engagement</div>
+          <h3 style="margin: 0 0 8px 0; padding: 0; border: none; font-size: 22px; color: var(--ink); font-weight: 700; letter-spacing: -0.01em;">Engagement Topics</h3>
+          <p style="margin: 0 0 18px 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.55;">
+            The topics below define what we'd like BotPress to cover in this build.
+            They're the substance of the engagement — meant to be reflected in the
+            scoping discussion and reflected in the deliverables of the contract.
+            Each is detailed in a section that follows.
+          </p>
 
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th style="width:28%">Topic</th>
-              <th>What it covers</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Catalog scaling — initial firm SKUs to broader catalog</strong></td>
-              <td>~150 firm SKUs ready now (six Product Family Kits + components). Conversational ordering should also work across the broader catalog (several thousand SKUs), supported through follow-up as KB content lands. Architecture sized for scale from day one.</td>
-            </tr>
-            <tr>
-              <td><strong>Voice-mode-friendly architecture</strong></td>
-              <td>STT/TTS handled on our side; BotPress text in / text out. Response style needs to work for both screen and voice — single tone or two-track per turn, to be decided together.</td>
-            </tr>
-            <tr>
-              <td><strong>iOS / Proxy payload contract</strong></td>
-              <td>Signal-driven communication between BotPress, our Proxy, and the iOS client. Customizable, well-defined for both directions, stable enough to build against.</td>
-            </tr>
-            <tr>
-              <td><strong>Order workflow — multi-step, state-preserving</strong></td>
-              <td>4-step lifecycle with handoff to native UI mid-flow. Cart state preservation, mode-exit handling, fallback paths designed organically into the workflow.</td>
-            </tr>
-            <tr>
-              <td><strong>KB structuring &amp; retrieval at scale</strong></td>
-              <td>Compound-description item matching, cross-product relations, clinical-language query handling. Quality maintained as catalog scales.</td>
-            </tr>
-            <tr>
-              <td><strong>KB maintenance tooling</strong></td>
-              <td>Ability to update KB content without editing the BotPress studio directly — shape of the tool open to recommendation.</td>
-            </tr>
-            <tr>
-              <td><strong>Sales-tool conversational quality</strong></td>
-              <td>Sales agent, not generic Q&amp;A. Intent classification accuracy during ordering, clarification gates, sales-supportive metadata (follow-up suggestions, related items).</td>
-            </tr>
-            <tr>
-              <td><strong>Production-grade system</strong></td>
-              <td>Debuggable, modular workflows. Clean boundaries. Operable and evolvable on our side after handoff.</td>
-            </tr>
-          </tbody>
-        </table>
+          <table class="doc-table" style="margin: 0; background: var(--bg-card);">
+            <thead>
+              <tr>
+                <th style="width:32%">Topic</th>
+                <th>What it covers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Catalog scaling &amp; KB structuring</strong></td>
+                <td>~150 firm SKUs ready now (six Product Family Kits + components) with full KB content. Conversational ordering should also work across the broader catalog (several thousand SKUs), supported through follow-up as KB content lands. Architecture sized for scale from day one — compound-description item matching, cross-product relations, clinical-language query handling, retrieval quality maintained as the catalog grows.</td>
+              </tr>
+              <tr>
+                <td><strong>Voice-mode-friendly architecture</strong></td>
+                <td>STT/TTS handled on our side; BotPress text in / text out. Response style needs to work for both screen and voice — single tone or two-track per turn, to be decided together.</td>
+              </tr>
+              <tr>
+                <td><strong>iOS / Proxy payload contract</strong></td>
+                <td>Signal-driven communication between BotPress, our Proxy, and the iOS client. Customizable, well-defined for both directions, stable enough to build against.</td>
+              </tr>
+              <tr>
+                <td><strong>Order workflow — multi-step, state-preserving</strong></td>
+                <td>4-step lifecycle with handoff to native UI mid-flow. Cart state preservation, mode-exit handling, fallback paths designed organically into the workflow.</td>
+              </tr>
+              <tr>
+                <td><strong>KB maintenance tooling</strong></td>
+                <td>Ability to update KB content without editing the BotPress studio directly — shape of the tool open to recommendation.</td>
+              </tr>
+              <tr>
+                <td><strong>Sales-tool conversational quality</strong></td>
+                <td>Sales agent, not generic Q&amp;A. Intent classification accuracy during ordering, clarification gates, sales-supportive metadata (follow-up suggestions, related items).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <p style="font-size: 12.5px; color: var(--ink-3); margin-top: 16px;">
+        <p style="font-size: 12.5px; color: var(--ink-3); margin-top: 20px;">
           Sections that follow detail each topic. The final two — Priority for
           First Response and API Reference — collect what would help us unblock
           earliest, and what BotPress will directly interact with in code.
@@ -1630,11 +1626,20 @@
 
         <h3>API Sequence by Step</h3>
         <p style="font-size: 12.5px; color: var(--ink-3); margin-bottom: 14px;">
-          Step 1 and 2 are initiated by BotPress; Step 3 and 4 by iOS. Every call
-          listed below goes through the Proxy. Request and response shapes for the
-          BotPress-initiated calls (Step 1 estimate, Step 2 create) are in the
-          API Reference section.
+          The 4 steps split cleanly along an ownership boundary —
+          <strong>BotPress is responsible for Steps 1–2</strong> (cart building and order
+          creation, conversational), while <strong>TruAbutment's iOS + Proxy handle
+          Steps 3–4</strong> (picker UI and order finalization). Every call routes
+          through the Proxy regardless. Request and response shapes for the
+          BotPress-initiated calls (Step 1 estimate, Step 2 create) are in the API
+          Reference section.
         </p>
+
+        <!-- Group header: BotPress-built -->
+        <div style="margin: 20px 0 10px; display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent-2); text-transform: uppercase; padding: 4px 10px; background: var(--accent-soft); border: 1px solid rgba(47, 107, 88, 0.25); border-radius: 4px;">BotPress builds &amp; calls</span>
+          <span style="font-size: 11.5px; color: var(--ink-3);">Steps 1–2 originate from the conversational layer</span>
+        </div>
 
         <div class="card">
           <div class="card-head">Step 1 · Order List (cart) <span style="font-weight:400;color:var(--ink-3);font-size:12px;">— BotPress → Proxy → CP</span></div>
@@ -1652,6 +1657,12 @@
           <table class="doc-table" style="margin:8px 0 0; box-shadow: none;">
             <tr><td style="width:80px;"><code>POST</code></td><td><code>/orders/create</code></td><td class="dimmed">Minimal payload: lineItems + type=SO + caseName. Generates the OPEN order in CP.</td></tr>
           </table>
+        </div>
+
+        <!-- Group header: TruAbutment-handled -->
+        <div style="margin: 24px 0 10px; display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; color: #8a6d3b; text-transform: uppercase; padding: 4px 10px; background: #fff4e0; border: 1px solid #e8d5a8; border-radius: 4px;">TruAbutment handles</span>
+          <span style="font-size: 11.5px; color: var(--ink-3);">Steps 3–4 are driven by iOS + Proxy after BotPress hands off via <code>ORDER_SUBMIT_GATE</code></span>
         </div>
 
         <div class="card gold-left">
@@ -1756,13 +1767,38 @@
           confirmation before we finalize.
         </div>
 
+        <div class="card" style="padding: 22px 24px; background: var(--accent-soft); border: 1px solid rgba(47, 107, 88, 0.25);">
+          <div style="font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent-2); text-transform: uppercase; margin-bottom: 8px;">The big picture</div>
+          <p style="margin: 0 0 10px 0; font-size: 13.5px; color: var(--ink); line-height: 1.6;">
+            <strong>Most conversation is plain text in / plain text out.</strong> What
+            sets the Sales Agent apart is that <strong>specific moments</strong> in the
+            conversation need to do more than render a chat bubble — they need to
+            trigger native iOS behavior (open a login sheet, launch a picker) or
+            carry structured data (order details, submission result). These
+            moments are encoded as <strong>signals</strong>.
+          </p>
+          <p style="margin: 0 0 10px 0; font-size: 13px; color: var(--ink-2); line-height: 1.55;">
+            A signal is a structured event embedded in the standard message
+            payload. <strong>Outbound</strong> (BotPress → iOS) signals tell iOS to render
+            something or take an action. <strong>Inbound</strong> (iOS → BotPress) signals
+            report back the result of an iOS-side action, or push contextual data
+            into the conversation.
+          </p>
+          <p style="margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55;">
+            We've kept the set of signals deliberately lean — only what's needed to
+            operate the order flow and core conversation. The rest of this section
+            walks through how signals fit into the overall flow, then lists the
+            essential set with an extended set we'd grow into over time.
+          </p>
+        </div>
+
         <h3>Approach</h3>
         <p>
-          Most conversation is plain text in / plain text out. At specific moments
-          BotPress needs to trigger <strong>native iOS UI</strong> (login sheet, address picker,
-          order detail view) or carry <strong>structured data</strong> (order list, order result).
-          These moments are encoded as <strong>signals</strong> — structured events embedded
-          in the standard message payload.
+          At specific moments, BotPress needs to trigger <strong>native iOS UI</strong>
+          (login sheet, address picker, order detail view) or carry
+          <strong>structured data</strong> (order list, order result). These moments are
+          encoded as <strong>signals</strong> — structured events embedded in the standard
+          message payload.
         </p>
 
         <h3>How User Identity &amp; Data Reach BotPress</h3>
@@ -1858,7 +1894,10 @@
           into as workflows mature.
         </p>
 
-        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2); margin: 16px 0 8px;">Essential — required for initial operation</p>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0 10px;">
+          <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; color: #ffffff; text-transform: uppercase; padding: 5px 12px; background: var(--accent-2); border-radius: 4px;">Essential</span>
+          <span style="font-size: 13px; font-weight: 600; color: var(--ink);">Required for initial operation</span>
+        </div>
 
         <table class="doc-table">
           <thead>
@@ -1879,7 +1918,10 @@
           </tbody>
         </table>
 
-        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 22px 0 8px;">Extended — to grow into as workflows mature</p>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 24px 0 10px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--ink-3); text-transform: uppercase; padding: 4px 10px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 4px;">Extended</span>
+          <span style="font-size: 12.5px; color: var(--ink-3);">To grow into as workflows mature</span>
+        </div>
 
         <table class="doc-table">
           <thead>
@@ -1895,7 +1937,6 @@
             <tr><td class="signal-name">RESUME_PROMPT</td><td>Surfaced mid-conversation when the user asks about a previous order or starts a new order intent while a pending order exists in CP. User responses ("resume", "no, new one") are handled as natural language replies — no dedicated inbound event for this in the initial scope.</td><td><code>pendingOrderId</code>, <code>pendingOrderSummary</code>, <code>orderLink</code></td><td class="dimmed">—</td></tr>
             <tr><td class="signal-name">OPEN_ORDER_LINK</td><td>User asks for a web link to an order. Could also be embedded as a URL in <code>BOT_RESPONSE</code> text.</td><td><code>orderNo</code>, <code>url</code></td><td class="dimmed">—</td></tr>
             <tr><td class="signal-name">HITL_TRIGGERED</td><td>Persistent API failure, human-help request, or out-of-scope routing</td><td><code>triggerType</code>, <code>userFacingMessage</code></td><td class="dimmed">—</td></tr>
-            <tr><td class="signal-name future">COUNTRY_REQUIRED <span class="tag future">future</span></td><td class="future">Anonymous user flow not in this phase</td><td class="future">{}</td><td class="future">off</td></tr>
             <tr><td colspan="4" style="text-align: center; color: var(--ink-4); font-style: italic; padding: 14px 0;">… additional signals can emerge as the workflow grows</td></tr>
           </tbody>
         </table>
@@ -1913,7 +1954,10 @@
   }
 }</div>
 
-        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2); margin: 16px 0 8px;">Essential — required for initial operation</p>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0 10px;">
+          <span style="font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; color: #ffffff; text-transform: uppercase; padding: 5px 12px; background: var(--accent-2); border-radius: 4px;">Essential</span>
+          <span style="font-size: 13px; font-weight: 600; color: var(--ink);">Required for initial operation</span>
+        </div>
 
         <table class="doc-table">
           <thead>
@@ -1929,7 +1973,10 @@
           </tbody>
         </table>
 
-        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 22px 0 8px;">Extended — to grow into as workflows mature</p>
+        <div style="display: flex; align-items: center; gap: 10px; margin: 24px 0 10px;">
+          <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--ink-3); text-transform: uppercase; padding: 4px 10px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 4px;">Extended</span>
+          <span style="font-size: 12.5px; color: var(--ink-3);">To grow into as workflows mature</span>
+        </div>
 
         <table class="doc-table">
           <thead>
@@ -1941,7 +1988,6 @@
           </thead>
           <tbody>
             <tr><td class="signal-name">ORDER_CANCELLED_BY_USER</td><td>User cancels the native picker without submitting</td><td><code>orderId</code></td></tr>
-            <tr><td class="signal-name future">COUNTRY_SELECTED <span class="tag future">future</span></td><td class="future">Anonymous user completes country picker</td><td class="future"><code>userCountry</code></td></tr>
             <tr><td colspan="3" style="text-align: center; color: var(--ink-4); font-style: italic; padding: 14px 0;">… additional events can emerge as the workflow grows</td></tr>
           </tbody>
         </table>
